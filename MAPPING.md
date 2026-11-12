@@ -8,7 +8,7 @@ Item 6 of the Failure semantics of openid/authzen#795, as read on 2026-11-12, is
 
 - The VATE repository at the commit in `PINS`, folder `reference/authzen-receipt-vectors`. The sha256 of `MANIFEST.json` is pinned in `PINS`, because the manifest does not list itself.
 - The script finds the variants by the keys of `MANIFEST.json` that end with `/input-history.json` (eight), reads each `input-history.json` for the order of the snapshots, and one `<snapshot>-history.json` per snapshot (seventeen). Every file it reads must have the sha256 and size listed in `MANIFEST.json`.
-- It never opens the expected files of VATE (`expected-*.json`), `interactions.json`, `operation.json`, `context.json`, `case.json` or `VECTORS.json`. The expected PEP condition of VATE is a function of the same effect state as the rule of item 6, so reading it here would make the comparison circular. Only `compare/compare.py` reads `expected-pep-decision.json`, after the mapping and the expected reports were committed.
+- It never opens the expected files of VATE (`expected-*.json`), `interactions.json`, `operation.json`, `context.json`, `case.json` or `VECTORS.json`. The expected PEP condition of VATE is a function of the same effect state as the rule of item 6, so reading it here would make the comparison circular. Only `compare/compare.py` reads `expected-pep-decision.json`; it was committed after the mapping and the expected reports.
 - No VATE code is run or imported; the JSON is read by the script's own code, with `python3 -I`. Signatures, `proof` and `status` fields and the chain of `previous` hashes are not checked.
 
 From a history the script reads `observed_at`, `inventory`, and from each record (base64 JSON in `records[].raw`) `kind`, `at`, `index`, and in `body` only `attempt_id`, `generation`, `runtime`, `outputs` (`native`), `effect_state`, `worker_excluded`, `retained_attempts` (`handoff`), and, for the comment line only, `reason` (`denied`) and `phase` (`execution_clock`).
@@ -66,8 +66,8 @@ Committed before `compare/compare.py`, which applies it. The labels and reasons 
 | VATE expectation | TRIEL report on the probe |
 |---|---|
 | `hold_same_logical_effect` | the monitor of `TERM 1` blocks the probe: `MONITOR 1 : ENTRY J BLOCK`, `LAST ENTRY J : MONITOR 1 BLOCK` |
-| reason: the effect remains unresolved | condition U: verdict `PENDING`, monitor `BLOCK` |
-| reason: the effect is completed | condition T: verdict `BREACHED` at the probe, monitor `BLOCK`. A dispatch here would violate item 6; the breach is the verdict on the hypothetical dispatch, not a failure of VATE |
+| reason: the earlier attempt remains unresolved | condition U: verdict `PENDING`, monitor `BLOCK` |
+| reason: the earlier effect is completed | condition T: verdict `BREACHED` at the probe, monitor `BLOCK`. A dispatch here would violate item 6; the breach is the verdict on the hypothetical dispatch, not a failure of VATE |
 | `conditional_continuation` (the snapshot `fenced` only) | `BLOCK` without a fresh authorization (condition U); `ALLOW` with it (condition F) only under the assumption of decision 5 |
 
 The condition column is derived from the report, not printed by the evaluator: `ALLOW` means F; `BLOCK` with `PENDING` means U; `BLOCK` with `BREACHED` means T. This holds because the probe is the only `dispatch` in each trace.
