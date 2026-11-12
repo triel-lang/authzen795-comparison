@@ -281,8 +281,9 @@ def build(pins: dict) -> str:
                     for e in sorted({r['phase']['comparison_expectation'] for r in other}))
         + ".",
         f"- The monitor of the rule blocks the probe in {n(main, lambda r: r['decision'] == 'BLOCK')} of "
-        f"{len(main)} snapshots. A constant BLOCK would agree with the VATE decision in "
-        f"{len(hold)} of {len(main)} snapshots: the decision alone carries little information.",
+        f"{len(main)} snapshots. The correspondence of `MAPPING.md` asks for BLOCK in every snapshot, "
+        "`conditional_continuation` without a fresh authorization included, so a rule that always "
+        f"blocks would give the same {len(main)} decisions: the decision alone says nothing.",
         f"- Reason \"remains unresolved\": {len(unresolved)} snapshots; condition U in "
         f"{n(unresolved, lambda r: r['condition'] == 'U')}, verdict PENDING in "
         f"{n(unresolved, lambda r: r['verdict'] == 'PENDING')}.",

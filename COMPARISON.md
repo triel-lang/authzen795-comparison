@@ -38,7 +38,7 @@ Columns:
 ## Counts
 
 - Snapshots: 17. VATE expects `hold_same_logical_effect` in 16, and `conditional_continuation` in 1.
-- The monitor of the rule blocks the probe in 17 of 17 snapshots. A constant BLOCK would agree with the VATE decision in 16 of 17 snapshots: the decision alone carries little information.
+- The monitor of the rule blocks the probe in 17 of 17 snapshots. The correspondence of `MAPPING.md` asks for BLOCK in every snapshot, `conditional_continuation` without a fresh authorization included, so a rule that always blocks would give the same 17 decisions: the decision alone says nothing.
 - Reason "remains unresolved": 10 snapshots; condition U in 10, verdict PENDING in 10.
 - Reason "is completed": 6 snapshots; condition T in 6, verdict BREACHED in 6.
 - `conditional_continuation` (03-confirmed-nonexecution-handoff/fenced-handoff/fenced): condition U, monitor BLOCK without a fresh authorization; condition F, monitor ALLOW under the assumption fresh_authorization = true.
