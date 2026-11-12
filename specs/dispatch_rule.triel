@@ -1,0 +1,49 @@
+-- The dispatch rule of item 6 of the Failure semantics of openid/authzen#795
+-- (the description as read on 2026-11-12; quoted in README.md), with
+-- `unknown` read as in item 1: an outcome that is not known is an absent
+-- factor, so a condition that reads it is undefined and the fail-closed
+-- monitor blocks the dispatch.
+--
+-- One instance of this specification is one logical effect. The subject pep
+-- stands for every runtime that may dispatch it. The five factors are
+-- statements about the attempts already reserved for that logical effect;
+-- how they are read from the VATE journals is MAPPING.md. The factors are
+-- read in the state of the entry just before the dispatch.
+--
+-- prior_attempt_registered is always given (true or false), never tested
+-- with PRESENT, and the condition has no PRESENT and no DEFAULT, so the
+-- assumption present_free of the theorems monitor_sound_completions and
+-- breach_certain_completions (formal/core/TRIEL_Completions.thy) holds.
+--
+-- The invariant is required by the grammar. On a finite trace ALWAYS is
+-- never T (always_never_true, formal/core/TRIEL_Invariants.thy): it is F
+-- from an entry where both factors are true, and U otherwise.
+
+SPECIFICATION authzen795_dispatch VERSION 1.0.0
+    PROVENANCE_REQUIRED: true
+
+SUBJECTS {
+  pep      : SYSTEM,
+  provider : ORACLE,
+  pdp      : ORACLE
+}
+
+TERMS {
+  pep MUST_NOT dispatch
+    WHEN prior_attempt_registered
+         AND (prior_completed
+              OR NOT (prior_confirmed_unexecuted AND prior_fenced AND fresh_authorization))
+}
+
+FACTORS {
+  prior_attempt_registered   : Boolean METADATA SOURCE provider,
+  prior_completed            : Boolean METADATA SOURCE provider,
+  prior_confirmed_unexecuted : Boolean METADATA SOURCE provider,
+  prior_fenced               : Boolean METADATA SOURCE provider,
+  fresh_authorization        : Boolean METADATA SOURCE pdp
+}
+
+INVARIANTS {
+  consistent_prior_state : SAFETY :
+    ALWAYS(NOT (prior_completed AND prior_confirmed_unexecuted))
+}

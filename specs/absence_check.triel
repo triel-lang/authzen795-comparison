@@ -1,0 +1,36 @@
+-- A contrast, not a reading of item 6: the dispatch is forbidden only when a
+-- completion receipt is present. PRESENT is always defined, so a missing
+-- receipt makes the condition false and the monitor allows the dispatch.
+-- Item 6 of openid/authzen#795 (as read on 2026-11-12) says that the absence
+-- of a completion receipt is not confirmation that an earlier attempt did not
+-- execute; this specification reads it as if it were. PRESENT is not
+-- monotone (T3_present_not_monotone, formal/core/TRIEL_Core.thy): a late
+-- recovery receipt turns an ALLOW given on less data into a condition that
+-- is true.
+--
+-- completion_receipt is present, and true, exactly when prior_completed is
+-- true in the companion scenario of specs/dispatch_rule.triel (MAPPING.md,
+-- decision 1); otherwise it is absent.
+--
+-- The invariant is required by the grammar and takes no part in the
+-- comparison.
+
+SPECIFICATION authzen795_absence_check VERSION 1.0.0
+    PROVENANCE_REQUIRED: true
+
+SUBJECTS {
+  pep      : SYSTEM,
+  provider : ORACLE
+}
+
+TERMS {
+  pep MUST_NOT dispatch WHEN PRESENT(completion_receipt)
+}
+
+FACTORS {
+  completion_receipt : Boolean METADATA SOURCE provider
+}
+
+INVARIANTS {
+  receipt_known : SAFETY : ALWAYS(completion_receipt == completion_receipt)
+}

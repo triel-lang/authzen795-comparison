@@ -1,0 +1,11 @@
+# The pinned inputs of the comparison (README.md). Read by mapping/map_vate.py,
+# compare/compare.py and .github/workflows/compare.yml.
+#
+# MANIFEST.json of the VATE vectors lists the sha256 of every other file of the
+# vectors and omits itself, so its own sha256 is pinned here.
+GRAMMAR_REPOSITORY=triel-lang/grammar
+GRAMMAR_COMMIT=09c25273e69d3987a12b2a75cfd4a2817b6acb2d
+VATE_REPOSITORY=Poke-nushi/Verifiable-Agent-Trust-Envelope
+VATE_COMMIT=c7533ad70c20e71b7912cdf708f33220e49c1f00
+VATE_VECTORS=reference/authzen-receipt-vectors
+VATE_MANIFEST_SHA256=66bfe7c9a51319241891cb2407901a2edaae3e99235bdc92d6898f19525f8073

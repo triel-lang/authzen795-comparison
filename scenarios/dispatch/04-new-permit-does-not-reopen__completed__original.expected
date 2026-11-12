@@ -1,0 +1,14 @@
+SPEC authzen795_dispatch
+METADATA PROVENANCE_REQUIRED true
+METADATA SOURCE prior_attempt_registered provider
+METADATA SOURCE prior_completed provider
+METADATA SOURCE prior_confirmed_unexecuted provider
+METADATA SOURCE prior_fenced provider
+METADATA SOURCE fresh_authorization pdp
+ACTIVATION OK
+BLOCK OK
+TYPES OK
+TERM 1 MUST_NOT pep dispatch : BREACHED 1792886400
+INVARIANT consistent_prior_state : U
+MONITOR 1 : ENTRY 7 BLOCK
+LAST ENTRY 7 : MONITOR 1 BLOCK
