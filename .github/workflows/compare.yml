@@ -2,7 +2,7 @@ name: Compare the dispatch rule with the VATE vectors
 
 on:
   push:
-    branches: [vate-1, vate-1-wip]
+    branches: [main, vate-1, vate-1-wip]
 
 permissions:
   contents: read
@@ -11,7 +11,9 @@ jobs:
   compare:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
       # PINS is the only place where the two commits and the sha256 of the
       # VATE manifest are written.
@@ -22,7 +24,7 @@ jobs:
           grep -E '^[A-Z0-9_]+=' PINS
 
       - name: Fetch TRIEL grammar at the pinned commit into grammar/
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: ${{ steps.pins.outputs.grammar_repository }}
           ref: ${{ steps.pins.outputs.grammar_commit }}
@@ -30,7 +32,7 @@ jobs:
           persist-credentials: false
 
       - name: Fetch the VATE repository at the pinned commit into vate/
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: ${{ steps.pins.outputs.vate_repository }}
           ref: ${{ steps.pins.outputs.vate_commit }}
@@ -45,14 +47,14 @@ jobs:
           git -C grammar rev-parse HEAD
           git -C vate rev-parse HEAD
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: "3.12"
 
       - name: Install lark for the translator
         run: pip install lark==1.3.1
 
-      - uses: haskell-actions/setup@v2
+      - uses: haskell-actions/setup@0f8e8c99d88aeb3fbfd523f1ef2c6f762d10d64d # v2
         with:
           ghc-version: "9.6.7"
 
