@@ -33,7 +33,7 @@ The workflow and a local run fetch the two repositories into `grammar/` and `vat
 | [`MAPPING.md`](MAPPING.md) | every decision of the mapping, and why; the correspondence with the VATE expectations; the hand derivation of the reports |
 | [`mapping/map_vate.py`](mapping/map_vate.py), [`mapping/test_map_vate.py`](mapping/test_map_vate.py) | the mapping script and its tests |
 | `scenarios/dispatch/*.scn`, `scenarios/absence/*.scn` | 35 scenarios written by the script: 17 per specification, and one for the snapshot `fenced` under an assumption |
-| `scenarios/*/*.expected`, `scenarios/*/*.exitcode` | the expected report of `triel check SPEC TRACE --last` and its exit code, written by hand |
+| `scenarios/*/*.expected`, `scenarios/*/*.exitcode` | the expected report of `triel check SPEC TRACE --last`, written by hand, and its exit code: 3 when the `LAST` line has BLOCK, 0 when it has ALLOW (`grammar/evaluator/README.md`, Exit codes). The exit codes of the rule were written by hand; those of the absence check were filled in by a one-line shell loop from the `LAST` line of the hand-written report |
 | [`compare/compare.py`](compare/compare.py), [`COMPARISON.md`](COMPARISON.md) | the comparison table and the script that builds it |
 | [`.github/workflows/compare.yml`](.github/workflows/compare.yml) | the workflow that checks all of the above |
 
