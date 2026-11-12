@@ -18,8 +18,8 @@ jobs:
       - name: Read PINS
         id: pins
         run: |
-          grep -E '^[A-Z_]+=' PINS | awk -F= '{ print tolower($1) "=" $2 }' >> "$GITHUB_OUTPUT"
-          grep -E '^[A-Z_]+=' PINS
+          grep -E '^[A-Z0-9_]+=' PINS | awk -F= '{ print tolower($1) "=" $2 }' >> "$GITHUB_OUTPUT"
+          grep -E '^[A-Z0-9_]+=' PINS
 
       - name: Fetch TRIEL grammar at the pinned commit into grammar/
         uses: actions/checkout@v7
